@@ -224,15 +224,26 @@ class LogentriesHandler extends AbstractProcessingHandler
 		$this->setSocketTimeout();
 	}
 
-	private function createSocketResource()
+	private function trySetResource()
 	{
 		if ($this->isPersistent()) {
 			$resource = $this->pfsockopen();
 		} else {
 			$resource = $this->fsockopen();
 		}
+
+		return $resource;
+	}
+
+	private function createSocketResource()
+	{
+		$resource = $this->trySetResource();		
+
 		if (!$resource) {
-			throw new \UnexpectedValueException("Failed connecting to Logentries ($this->errno: $this->errstr)");
+			$resource = $this->trySetResource();
+			if(!$resource){
+				throw new \UnexpectedValueException("Failed connecting to Logentries ($this->errno: $this->errstr)");
+			}
 		}
 		$this->resource = $resource;
 	}
