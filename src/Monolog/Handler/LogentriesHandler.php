@@ -42,6 +42,21 @@ class LogentriesHandler extends AbstractProcessingHandler
 	}	
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function isHandling(array $record)
+	{
+		$resource = $this->trySetResource();
+
+		if(!$resource){
+			return false;
+		}else{
+			$this->resource = $resource;
+			return true;
+		}
+	}
+
+	/**
 	 * Connect (if necessary) and write to the socket
 	 *
 	 * @param array $record
