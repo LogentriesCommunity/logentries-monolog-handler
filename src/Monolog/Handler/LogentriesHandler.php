@@ -257,10 +257,12 @@ class LogentriesHandler extends AbstractProcessingHandler
 		if (!$resource) {
 			$resource = $this->trySetResource();
 			if(!$resource){
-				throw new \UnexpectedValueException("Failed connecting to Logentries ($this->errno: $this->errstr)");
+				return false;
+				//throw new \UnexpectedValueException("Failed connecting to Logentries ($this->errno: $this->errstr)");
 			}
 		}
 		$this->resource = $resource;
+		return true;
 	}
 
 	private function setSocketTimeout()
@@ -288,9 +290,6 @@ class LogentriesHandler extends AbstractProcessingHandler
 			if ($socketInfo['timed_out']) {
 				throw new \RuntimeException("Write timed-out");
 			}
-		}
-		if (!$this->isConnected() && $sent < $length) {
-			throw new \RuntimeException("End-of-file reached, probably we got disconnected (sent $sent of $length)");
 		}
 	}
 }
