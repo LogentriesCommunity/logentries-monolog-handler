@@ -42,6 +42,21 @@ class LogentriesHandler extends AbstractProcessingHandler
 	}	
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function isHandling(array $record)
+	{
+		$resource = $this->trySetResource();
+
+		if(!$resource){
+			return false;
+		}else{
+			$this->resource = $resource;
+			return true;
+		}
+	}
+
+	/**
 	 * Connect (if necessary) and write to the socket
 	 *
 	 * @param array $record
@@ -224,17 +239,30 @@ class LogentriesHandler extends AbstractProcessingHandler
 		$this->setSocketTimeout();
 	}
 
-	private function createSocketResource()
+	private function trySetResource()
 	{
 		if ($this->isPersistent()) {
 			$resource = $this->pfsockopen();
 		} else {
 			$resource = $this->fsockopen();
 		}
+
+		return $resource;
+	}
+
+	private function createSocketResource()
+	{
+		$resource = $this->trySetResource();		
+
 		if (!$resource) {
-			throw new \UnexpectedValueException("Failed connecting to Logentries ($this->errno: $this->errstr)");
+			$resource = $this->trySetResource();
+			if(!$resource){
+				return false;
+				//throw new \UnexpectedValueException("Failed connecting to Logentries ($this->errno: $this->errstr)");
+			}
 		}
 		$this->resource = $resource;
+		return true;
 	}
 
 	private function setSocketTimeout()
@@ -262,9 +290,6 @@ class LogentriesHandler extends AbstractProcessingHandler
 			if ($socketInfo['timed_out']) {
 				throw new \RuntimeException("Write timed-out");
 			}
-		}
-		if (!$this->isConnected() && $sent < $length) {
-			throw new \RuntimeException("End-of-file reached, probably we got disconnected (sent $sent of $length)");
 		}
 	}
 }
