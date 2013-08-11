@@ -1,21 +1,10 @@
 <?php
 
-/*
- *  This file is an extension of the Monolog package to send logs
- *  to Logentries.
- *
- *  @author  Mark Lacomber <marklacomber@gmail.com>  
- *
- */
-
-namespace Monolog\Handler;
+namespace Logentries\Handler;
 
 use Monolog\Logger;
 use Monolog\Handler\AbstractProcessingHandler;
 
-/**
- * Adaptation of Pablo de Leon Belloc's SocketHandler to work with Logentries
- */
 class LogentriesHandler extends AbstractProcessingHandler
 {
 	private $connectionTimeout;
