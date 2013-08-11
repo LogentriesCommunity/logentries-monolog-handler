@@ -16,7 +16,6 @@ use Monolog\Handler\AbstractProcessingHandler;
 /**
  * Adaptation of Pablo de Leon Belloc's SocketHandler to work with Logentries
  */
-
 class LogentriesHandler extends AbstractProcessingHandler
 {
 	private $connectionTimeout;
@@ -26,8 +25,8 @@ class LogentriesHandler extends AbstractProcessingHandler
 	private $persistent = false;
 	private $errno;
 	private $errstr;
-	private $LE_API = 'api.logentries.com';
-	private $LE_PORT = 10000;
+	private $api = 'api.logentries.com';
+	private $port = 10000;
 
 	/**
 	 * @param string  $token  Token UUID for Logentries logfile
@@ -68,7 +67,7 @@ class LogentriesHandler extends AbstractProcessingHandler
 	{
 		$this->connectIfNotConnected();
 		$data = $this->generateDataStream($record);
-		$final_data = "$this->token $data\n";
+		$final_data = sprintf("%s %s\n", $this->token, $data);
 		$this->writeToSocket($final_data);
 	}
 
@@ -121,9 +120,9 @@ class LogentriesHandler extends AbstractProcessingHandler
 	 */
 	public function setTimeout($seconds)
 	{
-        	$this->validateTimeout($seconds);
-        	$this->timeout = (float) $seconds;
-    	}
+		$this->validateTimeout($seconds);
+		$this->timeout = (float) $seconds;
+	}
 
 	/**
 	 * Get persistent setting
@@ -172,7 +171,7 @@ class LogentriesHandler extends AbstractProcessingHandler
 	 */
 	protected function pfsockopen()
 	{
-        	return @pfsockopen($this->LE_API, $this->LE_PORT, $this->errno, $this->errstr, $this->connectionTimeout);
+		return @pfsockopen($this->api, $this->port, $this->errno, $this->errstr, $this->connectionTimeout);
 	}
 
 	/**
@@ -180,7 +179,7 @@ class LogentriesHandler extends AbstractProcessingHandler
 	 */
 	protected function fsockopen()
 	{
-		return @fsockopen($this->LE_API, $this->LE_PORT, $this->errno, $this->errstr, $this->connectionTimeout);
+		return @fsockopen($this->api, $this->port, $this->errno, $this->errstr, $this->connectionTimeout);
 	}
 
 	/**
@@ -216,7 +215,7 @@ class LogentriesHandler extends AbstractProcessingHandler
 	{
 		$ok = filter_var($value, FILTER_VALIDATE_FLOAT);
 		if ($ok === false || $value < 0) {
-			throw new \InvalidArgumentException("Timeout must be 0 or a positive float (got $value)");
+			throw new \InvalidArgumentException('Timeout must be 0 or a positive float (got $value)');
 		}
 	}
 
@@ -256,9 +255,9 @@ class LogentriesHandler extends AbstractProcessingHandler
 
 		if (!$resource) {
 			$resource = $this->trySetResource();
-			if(!$resource){
+			if( ! $resource){
 				return false;
-				//throw new \UnexpectedValueException("Failed connecting to Logentries ($this->errno: $this->errstr)");
+				//throw new \UnexpectedValueException('Failed connecting to Logentries ($this->errno: $this->errstr)');
 			}
 		}
 		$this->resource = $resource;
@@ -268,7 +267,7 @@ class LogentriesHandler extends AbstractProcessingHandler
 	private function setSocketTimeout()
 	{
 		if (!$this->streamSetTimeout()) {
-			throw new \UnexpectedValueException("Failed setting timeout with stream_set_timeout()");
+			throw new \UnexpectedValueException('Failed setting timeout with stream_set_timeout()');
 		}
 	}
 
@@ -283,12 +282,12 @@ class LogentriesHandler extends AbstractProcessingHandler
 				$chunk = $this->fwrite(substr($data, $sent));
 			}
 			if ($chunk === false) {
-				throw new \RuntimeException("Could not write to socket");
+				throw new \RuntimeException('Could not write to socket');
 			}
 			$sent += $chunk;
 			$socketInfo = $this->streamGetMetadata();
 			if ($socketInfo['timed_out']) {
-				throw new \RuntimeException("Write timed-out");
+				throw new \RuntimeException('Write timed-out');
 			}
 		}
 	}
