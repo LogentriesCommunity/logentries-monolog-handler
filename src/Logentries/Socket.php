@@ -68,7 +68,7 @@ class Socket
 
 	private function createResource()
 	{
-		$this->resource = $this->fsockopen();		
+		$this->resource = $this->fsockopen();
 
 		if ( ! $this->resource)
 		{
