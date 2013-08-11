@@ -1,9 +1,19 @@
 {
     "name": "logentries/logentries-monolog-handler",
     "description": "A handler for Monolog that sends messages to Logentries.com.",
-    "keywords": ["log", "logging", "monolog", "logentries"],
+    "keywords": ["log", "logging", "monolog", "logentries", "laravel", "symonfy"],
     "homepage": "https://github.com/logentries/le_monolog",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Johannes Schickling",
+            "email": "marklacomber@gmail.com"
+        },
+        {
+            "name": "Mark Lacomber",
+            "email": "schickling.j@gmail.com"
+        }
+    ],
     "require": {
         "monolog/monolog": ">=1.4"
     },
