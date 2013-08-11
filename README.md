@@ -5,13 +5,13 @@ logentries-monolog-handler [![Build Status](https://travis-ci.org/logentries/le_
 
 Add the following to your composer.json and run `composer update`
 
-    ```json
-    {
-        "require": {
-            "logentries/logentries-monolog-handler": "dev-master"
-        }
+```json
+{
+    "require": {
+        "logentries/logentries-monolog-handler": "dev-master"
     }
-    ```
+}
+```
 
 ## Usage
 
