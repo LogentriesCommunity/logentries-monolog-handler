@@ -23,7 +23,7 @@ $monolog->pushHandler(new Logentries\Handler\LogentriesHandler('YOUR_TOKEN'));
 ```php
 $monolog = new Logger('TestLog');
 $monolog->pushHandler(new LogentriesHandler('YOUR_TOKEN'));
-$monolog->addWarning('This is a warning log message');
+$monolog->addWarning('This is a warning logging message');
 ```
 
 ## Links
