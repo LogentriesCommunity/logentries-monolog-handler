@@ -4,6 +4,10 @@ use Logentries\Socket;
 use Monolog\Logger;
 use Monolog\Handler\AbstractProcessingHandler;
 
+/**
+*  VERSION: 2.0
+*/
+
 class LogentriesHandler extends AbstractProcessingHandler
 {
 	private $token;

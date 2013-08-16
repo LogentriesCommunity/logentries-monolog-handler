@@ -1,6 +1,8 @@
 logentries-monolog-handler [![Build Status](https://travis-ci.org/logentries/le_monolog.png)](https://travis-ci.org/logentries/le_monolog)
 ===========================
 
+Current Version: 2.0
+
 ## Installation
 
 Add the following to your composer.json and run `composer update`
