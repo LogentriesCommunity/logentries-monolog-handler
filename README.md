@@ -1,4 +1,4 @@
-logentries-monolog-handler [![Build Status](https://travis-ci.org/logentries/le_monolog.png)](https://travis-ci.org/logentries/le_monolog)
+logentries-monolog-handler [![Build Status](https://travis-ci.org/logentries/logentries-monolog-handler.png)](https://travis-ci.org/logentries/logentries-monolog-handler)
 ===========================
 
 Current Version: 2.0
