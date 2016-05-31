@@ -6,7 +6,6 @@ class Socket
 	private $port;
 	private $connectionTimeout;
 	private $resource;
-	private $timeout = 0;
 	private $errno;
 	private $errstr;
 
@@ -96,8 +95,8 @@ class Socket
 
 	private function streamSetTimeout()
 	{
-		$seconds = floor($this->timeout);
-		$microseconds = round(($this->timeout - $seconds) * 1e6);
+		$seconds = floor($this->connectionTimeout);
+		$microseconds = round(($this->connectionTimeout - $seconds) * 1e6);
 
 		return stream_set_timeout($this->resource, $seconds, $microseconds);
 	}
