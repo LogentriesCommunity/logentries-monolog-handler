@@ -12,13 +12,18 @@
         {
             "name": "Mark Lacomber",
             "email": "marklacomber@gmail.com"
+        },
+        {
+            "name": "Ivo van Beek",
+            "email": "ivo@dewebdivisie.nl"
         }
     ],
     "require": {
-        "monolog/monolog": ">=1.4"
+        "php": "^7.0",
+        "monolog/monolog": "^1.4"
     },
     "require-dev": {
-        "mockery/mockery": "dev-master"
+        "mockery/mockery": "^0.9"
     },
     "autoload": {
         "psr-0": {
