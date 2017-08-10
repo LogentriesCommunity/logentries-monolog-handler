@@ -67,8 +67,9 @@ class LogentriesHandler extends AbstractProcessingHandler
     protected function generateDataStream(array $record): string
     {
         return sprintf(
-            "%s hostname=%s %s.%s: %s %s\n",
+            "%s %s hostname=%s %s.%s: %s %s\n",
             $this->token,
+            $record['datetime']->format(\DateTime::ATOM),
             gethostname(),
             $record['channel'],
             $record['level_name'],
