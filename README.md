@@ -1,8 +1,7 @@
 logentries-monolog-handler [![Build Status](https://travis-ci.org/logentries/logentries-monolog-handler.png)](https://travis-ci.org/logentries/logentries-monolog-handler)
 ===========================
 
-*This plug in will no longer be officially supported or maintained by Logentries.<br>
-If you would be interested in maintaining this project, please contact support@logentries.com.*
+*This plug in will no longer be officially supported or maintained by Logentries.<br>*
 
 
 Current Version: 2.1
